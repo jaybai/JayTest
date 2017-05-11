@@ -94,12 +94,6 @@ public class MainActivity extends AppCompatActivity {
 
         //Test Code End
 
-
-        int[] array=new int[]{2,2,1,1};
-        CountStep countStep = new CountStep();
-        countStep.permute(array,0);
-        System.out.println("end");
-
     }
 
 }
