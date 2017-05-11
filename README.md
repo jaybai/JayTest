@@ -7,3 +7,4 @@
 ### 这是新分支3
 ### 测试新feature 2
 ### 测试gitflow 创建 feature
+### 测试release
