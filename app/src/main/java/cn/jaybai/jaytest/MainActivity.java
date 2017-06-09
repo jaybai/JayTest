@@ -14,7 +14,12 @@ import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import com.jakewharton.rxbinding2.view.RxView;
+
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -54,6 +59,15 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        RxView.clicks(mCodeButton)
+                .throttleFirst(20, TimeUnit.MINUTES)
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .doOnNext(new Action<void>(){
+                    @Override
+                    public void call(Void aVoid) {
+                        RxView.enabled(mCodeButton).call(false);
+                    }
+                });
         //Test Code Start
 
         Observable.create(new ObservableOnSubscribe<String>() {
@@ -79,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
               @Override
               public void onNext(@io.reactivex.annotations.NonNull String s) {
                   Log.e(TAG, "onNext : " + s);
+                  mTextMessage.append(s);
               }
 
               @Override
